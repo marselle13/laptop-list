@@ -6,6 +6,24 @@
     <link href="/dist/output.css" rel="stylesheet" />
   </head>
   <body>
-    <h1>Hello world!</h1>
+    <div class="grid justify-items-center mt-20">
+      <img src="image/redberry.png" alt="redberry" class="mb-32 sm:invisible" />
+      <img src="image/landing_mobile.png" alt="landing" id="mobile" />
+      <img src="image/landing.png" alt="landing" class="mb-32" id="desktop" />
+      <div class="btn-mobile grid justify-items-center">
+        <button
+          class="add bg-blue-400 hover:bg-blue-700 text-xl font-medium text-white px-20 py-4 rounded"
+        >
+          ჩანაწერის დამატება
+        </button>
+        <button
+          class="bg-blue-400 hover:bg-blue-700 font-medium text-xl text-white px-[110px] py-4 mt-6 rounded"
+          href="add.html"
+        >
+          ჩანაწერის სია
+        </button>
+      </div>
+    </div>
+    <script src="app.js"></script>
   </body>
 </html>
