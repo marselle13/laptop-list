@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/dist/output.css" rel="stylesheet" />
+  </head>
+  <body class="bg-[#F6F6F6]">
+    <button
+      type="button"
+      class="back inline-block rounded-full bg-gray-300 leading-normal uppercase w-12 h-12 mt-12 ml-16 mb:mt-[20px] mb:ml-0 mb:pb-[20px] mb:bg-[#F6F6F6]"
+    >
+      <svg
+        class="h-8 w-12 mx-auto text-black"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="currentColor"
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" />
+        <polyline points="15 6 9 12 15 18" />
+      </svg>
+    </button>
+
+    <div>
+      <h3 class="hidden mb:visible mb:flex mb:justify-center mb:font-bold mb:text-base mb:-mt-12 mb:mb-10">თანამშრომლის ინფო</h3>
+      <p class="hidden mb:visible mb:flex mb:justify-center mb:-mt-10 mb:mb-[8px] mb:text-gray-400">1/2</p>
+    </div>
+
+    <ul class="flex p-4  justify-center flex-row space-x-8 -mt-8 text-lg font-bold mb:hidden">
+      <li >
+        <a href="#" class="block  bg-gray-700 rounded bg-transparent text-gray-400" aria-current="page">თანამშრომლის ინფო</a>
+        <div class="flex-grow h-px bg-black p-[2px] my-1 mx-[8px] mb:hidden"></div> 
+      </li>
+      <li>
+        <a href="#" class="block  pr-4 pl-3 text-gray-700   border-0 hover:text-gray-400 mb:invisible">ლეპტოპის მახასიათებლები</a>
+      </li>
+</ul>
+
+    <div class="bg-[#F6F6F6] flex justify-center">
+ 
+    
+      <form class="w-full max-w-5xl bg-white pt-24 px-40 mb:px-4 ">
+    
+
+        <div class="flex flex-wrap -mx-3 mb-6 mb:-mt-10">
+          <div class="w-1/2 px-3 mb-6 ">
+            <label
+              class="block tracking-wide text-black text-lg font-semibold mb-1"
+              for="grid-first-name"
+            >
+              სახელი
+            </label>
+            <input
+              class="appearance-none block w-full bg-white text-gray-700 border border-[#8AC0E2] rounded py-3 px-4 mb-2 leading-tight focus:outline-none "
+              id="grid-first-name"
+              type="text"
+            />
+            <p class="text-gray-500 text-sm">
+              მინიმუმ 2 სიმბოლო ქართული ასოებით
+            </p>
+          </div>
+          <div class="w-1/2 px-3">
+            <label
+              class="block tracking-wide text-black text-lg font-semibold mb-1"
+              for="grid-first-name"
+            >
+              გვარი
+            </label>
+            <input
+              class="appearance-none block w-full bg-white text-gray-700 border border-[#8AC0E2] rounded py-3 px-4 mb-2 leading-tight focus:outline-none "
+              id="grid-first-name"
+              type="text"
+            />
+            <p class="text-gray-500 text-sm">
+              მინიმუმ 2 სიმბოლო ქართული ასოებით
+            </p>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <div class="w-full px-3 mb:-mb-[25px]">
+            <div class="relative mt-6 mb-10 mb:mt-0">
+              <select
+                class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-4 px-4 rounded text-lg font-semibold tracking-wide"
+                id="grid-state"
+              >
+                <option class="text-xs" selected>თიმი</option>
+             
+              </select>
+              <div
+                class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-700"
+              >
+                <svg
+                  class="fill-current h-6 w-9"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                  />
+                </svg>
+              </div>
+        </div>
+
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <div class="w-full px-3">
+            <div class="relative">
+              <select
+                class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-4 px-4 rounded font-semibold text-lg tracking-wide"
+                id="grid-state"
+              >
+                <option class="text-xs" selected>პოზიცია</option>
+              </select>
+              <div
+                class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-700"
+              >
+                <svg
+                  class="fill-current h-6 w-9"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div class="w-full my-10">
+              <label
+                class="block tracking-wide text-black text-lg font-semibold mb-1"
+                for="grid-first-name"
+              >
+                ემაილი
+              </label>
+              <input
+                class="appearance-none block w-full bg-white text-gray-700 border border-[#8AC0E2] rounded py-3 px-4 leading-tight focus:outline-none"
+                id="grid-first-name"
+                type="text"
+              />
+              <p class="text-gray-500 text-sm mt-1">
+                უნდა მთავრდებოდს @redberry.ge-ით
+              </p>
+            </div>
+        
+
+          <div class="w-full">
+            <label
+              class="block tracking-wide text-black text-lg font-semibold mb-1"
+              for="grid-first-name"
+            >
+              ტელეფონის ნომერი
+            </label>
+            <input
+              class="appearance-none block w-full bg-white text-gray-700 border border-[#8AC0E2] rounded py-3 px-4 mb-2 leading-tight focus:outline-none"
+              id="grid-first-name"
+              type="text"
+            />
+            <p class="text-gray-500 text-sm">
+              უნდა აკმაყოფილებდეს ქართული მობ-ნომრის ფორმატს
+            </p>
+          </div>
+        </div>
+      </div>
+    <div class="flex justify-end">
+      <button
+      class="bg-blue-400 text-xl font-medium text-white px-10 py-4 rounded hover:bg-blue-500 mt-16 mb-12"
+    >
+      შემდეგი
+    </button>
+  </div>
+      </form>
+    </div>
+</div>
+</div>
+<footer>
+    <div class="grid justify-items-center mt-16 mb-12 mb:hidden">
+      <img src="image/postman.png" alt="postman" class="h-[85px]"/>
+      </div>
+    <script src="app.js"></script>
+    </footer>
+  </body>
+</html>
+
+
