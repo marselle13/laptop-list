@@ -2,13 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "HelveticNeue";
-  src: url("fonts/HelveticaNeue.ttc") format("truetype");
-}
-
-body {
-  font-family: "HelveticNeue";
+html {
+  font-family: "Helvetic Neue";
 }
 
 #desktop {
