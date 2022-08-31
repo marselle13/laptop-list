@@ -1,5 +1,6 @@
 "use strict";
 //variables
+
 const back = document.querySelector(".back");
 const url_team = "https://pcfy.redberryinternship.ge/api/teams";
 const url_position = "https://pcfy.redberryinternship.ge/api/positions";
@@ -26,6 +27,7 @@ const emailError = document.querySelector(".email-error");
 const phoneText = document.querySelector(".phone-text");
 const phone = document.getElementById("phone");
 const phoneError = document.querySelector(".phone-error");
+const phoneErrorMobile = document.querySelector(".phone-error-mobile");
 const person = document.querySelector(".person");
 const next = document.querySelector(".next");
 const des = document.querySelector(".des");
@@ -36,23 +38,39 @@ const line = document.querySelector(".line");
 //upload variables
 const upload = document.getElementById("upload");
 const uploadName = document.querySelector(".upload-text");
+const uploadAgain = document.querySelector(".upload-again");
+const uploadInfo = document.querySelector(".upload-info");
+const uploaded = document.querySelector(".uploaded");
 const problem = document.querySelector(".problem");
 //laptop Name variables
 const laptopNameText = document.querySelector(".laptop-name-text");
 const laptopName = document.getElementById("laptop-name");
 const laptopNameError = document.querySelector(".laptop-name-error");
-//laptop cores
+//laptop cores variables
 const coresName = document.querySelector(".cores-name");
 const cores = document.getElementById("cores");
 const coresError = document.querySelector(".cores-error");
-//laptop threads
+//laptop threads variables
 const threadsName = document.querySelector(".threads-name");
 const threads = document.getElementById("threads");
 const threadsError = document.querySelector(".threads-error");
-//laptop ram
+//laptop ram variables
 const ramName = document.querySelector(".ram-text");
 const ram = document.getElementById("ram");
 const ramError = document.querySelector(".ram-error");
+//storage type variables
+const storageName = document.querySelector(".memory-text");
+const storage = document.getElementsByName("memoryStorage");
+const storageError = document.querySelector(".memory-problem");
+//price variables
+const priceName = document.querySelector(".price-text");
+const price = document.getElementById("price");
+const priceError = document.querySelector(".price-error");
+
+//state variables
+const stateName = document.querySelector(".state-text");
+const stateError = document.querySelector(".state-error");
+
 const back2 = document.querySelector(".back2");
 const mobile = document.querySelector(".mobile");
 const mobile2 = document.querySelector(".mobile2");
@@ -63,9 +81,9 @@ const postman = document.querySelector(".postman");
 const home = document.querySelector(".home");
 const formInfo = document.querySelector("#form-info");
 
-//go on add page from landing page
+//go on add page from landing pageeName
 back.addEventListener("click", function () {
-  location.href = "/index.html";
+  location.href = "../index.html";
 });
 
 //disable position
@@ -155,6 +173,59 @@ let regexleptopName = /^[a-zA-Z0-9!@#$%^&*()_+=]*$/;
 let regexNumbers = /^\d+$/;
 let regexMobile = /^(\+995)(79\d{7}|5\d{8})$/;
 
+window.addEventListener("load", function () {
+  let upload = `<img src="image/done.png" alt="done" class="check">`;
+  document
+    .querySelector('input[type="file"]')
+    .addEventListener("change", function () {
+      if (this.files && this.files[0]) {
+        const img = document.querySelector(".image");
+        img.onload = () => {
+          console.log(upload);
+          uploadInfo.innerHTML = upload;
+          URL.revokeObjectURL(img.src);
+          uploaded.classList.remove("hidden");
+          uploadAgain.classList.add("flex");
+          uploadAgain.classList.remove("hidden");
+          uploadName.classList.add("hidden");
+        };
+        let count = this.files[0].size / 1048576;
+        count = count.toFixed(2);
+        upload += `<h4 class="img-name">${this.files[0].name},</h4> <p class="mb">${count} mb</p>
+        `;
+        img.src = URL.createObjectURL(this.files[0]);
+        console.log(this.files[0]);
+      }
+    });
+});
+
+$(document).on("change", function () {
+  saveData("text");
+  saveData("date");
+  saveData("file");
+
+  $('input[type="radio"]:checked').each(function () {
+    let name = $(this).attr("name");
+    let value = $(this).val();
+    console.log(value);
+    localStorage.setItem(name, value);
+  });
+
+  $("select").each(function () {
+    let id = $(this).attr("id");
+    let value = $(this).val();
+    localStorage.setItem(id, value);
+  });
+
+  function saveData(key) {
+    $(`input[type=${key}]`).each(function () {
+      let id = $(this).attr("id");
+      let value = $(this).val();
+      localStorage.setItem(id, value);
+    });
+  }
+});
+
 next.addEventListener("click", function () {
   //first Name validation
   nameVal(firstNameError, firstName, firstNameText, firstName.value);
@@ -173,11 +244,14 @@ next.addEventListener("click", function () {
     $("#last-name").hasClass("border-blue-300") &&
     $("#email").hasClass("border-blue-300") &&
     $("#grid-state").hasClass("border-gray-200") &&
-    $("#grid-position").hasClass("border-gray-200")
+    $("#grid-position").hasClass("border-gray-200") &&
+    $("#phone").hasClass("border-blue-300")
   ) {
     info.classList.add("hidden");
     laptop.classList.remove("hidden");
     laptop.classList.add("flex");
+    getData(url_brand, "ლეპტოპის ბრენდი", option_brand);
+    getData(url_cpu, "CPU", option_cpu);
   }
 });
 
@@ -249,12 +323,21 @@ function mobileVal(key1, key2, key3, value) {
   if (value === "") {
     key1.textContent = "სავალდებულოა";
     error(key1, key2, key3, value);
+    phoneErrorMobile.textContent = "სავალდებულოა";
+    phoneErrorMobile.classList.remove("text-gray-500");
+    phoneErrorMobile.classList.add("text-red-500");
   } else if (!regexMobile.test(value)) {
     key1.textContent = "უნდა აკმაყოფილებდეს ქართული მობ-ნომრის ფორმატს";
     error(key1, key2, key3);
+    phoneErrorMobile.textContent = "ქართული მობ-ნომრის ფორმატი";
+    phoneErrorMobile.classList.remove("text-gray-500");
+    phoneErrorMobile.classList.add("text-red-500");
   } else {
     key1.textContent = "უნდა აკმაყოფილებდეს ქართული მობ-ნომრის ფორმატს";
     correct(key1, key2, key3);
+    phoneErrorMobile.textContent = "ქართული მობ-ნომრის ფორმატი";
+    phoneErrorMobile.classList.remove("text-red-500");
+    phoneErrorMobile.classList.add("text-gray-500");
   }
 }
 
@@ -276,30 +359,31 @@ function useRegex(input) {
 }
 
 done.addEventListener("click", function () {
+  //name validation
   laptopNameVal(laptopNameError, laptopName, laptopNameText, laptopName.value);
+  //laptop brand validation
   dropDownValidation(option_brand, option_brand.value, "ლეპტოპის ბრენდი");
+  //laptop cpu validation
   dropDownValidation(option_cpu, option_cpu.value, "CPU");
+  //cores validation
   numberValidation(coresError, cores, coresName, cores.value);
+  //threads validaiton
   numberValidation(threadsError, threads, threadsName, threads.value);
-  numberValidation(threadsError, threads, threadsName, threads.value);
+  //ram validation
   numberValidation(ramError, ram, ramName, ram.value);
-  uploadVal(upload.value);
+  //storage type validation
+  radioValidation(storageName, storageError, "memoryStorage");
+  //state type validation
+  radioValidation(stateName, stateError, "stateStorage");
+  //price validation
+  numberValidation(priceError, price, priceName, price.value);
+  console.log(price.value);
 
   // donePage.classList.add("hidden");
   // postman.classList.add("hidden");
   // popup.classList.add("flex");
   // popup.classList.remove("hidden");
 });
-
-function uploadVal(value) {
-  const allowedFormats = ["jpeg", "jpg", "png"];
-
-  for (var index in allowedFormats) {
-    if (console.log(value === allowedFormats[index])) {
-      console.log("not allowed");
-    }
-  }
-}
 
 function laptopNameVal(key1, key2, key3, value) {
   if (value === "") {
@@ -327,9 +411,18 @@ function numberValidation(key1, key2, key3, value) {
   }
 }
 
+function radioValidation(key1, key2, name) {
+  if ($(`:input[name=${name}]`).is(":checked") == false && $) {
+    key1.classList.remove("text-black");
+    key1.classList.add("text-red-500");
+    key2.classList.remove("hidden");
+  } else {
+    key1.classList.remove("text-red-500");
+    key1.classList.add("text-black");
+    key2.classList.add("hidden");
+  }
+}
+
 home.addEventListener("click", function () {
   location.href = "/index.html";
 });
-
-getData(url_brand, "ლეპტოპის ბრენდი", option_brand);
-getData(url_cpu, "CPU", option_cpu);

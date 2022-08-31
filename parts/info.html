@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="/dist/output.css" rel="stylesheet" />
+    <link href="../dist/output.css" rel="stylesheet" />
     <title>ჩანაწერის დამატება</title>
   </head>
   <body class="bg-[#F6F6F6]">
@@ -179,7 +179,7 @@
               უნდა აკმაყოფილებდეს ქართული მობ-ნომრის ფორმატს
             </p>
 
-            <p class="phone-error text-gray-500 text-sm mb:visible" id="mobile">
+            <p class="phone-error-mobile text-gray-500 text-sm mb:visible" id="mobile">
               ქართული მობ-ნომრის ფორმატი
             </p>
           </div>
@@ -209,36 +209,64 @@
         class="w-full max-w-5xl bg-white pt-24 px-36 mb:px-4 "
         id="form-laptop"
       >
-        <div class="flex flex-wrap -mx-3 mb-6 mb:-mt-10 "></div>
+        <div class="flex flex-wrap -mx-3 mb-6 mb:-mt-10 " id="display"></div>
         <div class="flex items-center justify-center w-full">
-          <label class="upload flex flex-col rounded-2xl border-4 border-dashed border-[#4386A9] w-full pt-24 group text-center bg-[#F6F6F6] mb:pt-16">
-              <div class="h-full w-full text-center flex flex-col  justify-center items-center  ">
+          <div class="uploaded flex-col rounded-2xl   w-full pt-24 group text-center bg-[#F6F6F6] mb:pt-24 hidden">
+          <img src="" alt="" class="image -mt-[94px] w-full h-full rounded-2xl flex justify-center">
+                  
+        </div>
+
+          <label for="upload" class="upload-text flex flex-col rounded-2xl border-4 border-dashed border-[#4386A9] w-full pt-24 group text-center bg-[#F6F6F6] mb:pt-16">
+          
+              <div class="upload-text h-full w-full text-center flex flex-col  justify-center items-center">
+
                 <img src="image/camera.png" alt="camera"  id="mobile">
                 <div class="w-10 h-10 mb-8">
                 <img src="image/problem.png" alt="problem" class="problem hidden">
               </div>
-            <div class="upload-text text-[#4386A9] text-xl mb:hidden">
+            <div class=" text-[#4386A9] text-xl mb:hidden">
                 <p>ჩაგდე ან ატვირთე</p> <br>
                 <p class="-mt-5">ლეპტოპის ფოტო</p>
               </div>
 
-              <div class="upload-text text-[#4386A9] text-xl  mb:mt-12 mb:mb-14 " id="mobile">
+              <div class="text-[#4386A9] text-xl  mb:mt-12 mb:mb-14 " id="mobile">
                 <p>ლეპტოპის ფოტოს</p> <br>
                 <p class="-mt-5">ატვირთვა</p>
               </div>
               
           </label>
-          
+
             <div
             class="bg-blue-400 text-xl font-medium text-white px-16 py-4 rounded hover:bg-blue-500 cursor-pointer mt-20 mb-32 mb:hidden"
           >
             ატვირთე
-            <input type='file' class="hidden" id="upload"/>
+            <input type='file' class="hidden" id="upload" accept="image/png, image/jpg, image/jpeg"/>
             </div>
         </div>
         </div>
 
+        <div class="upload-again -mx-3 mt-12 mb-6 mb:mt-4 hidden">
+          <div class="flex upload-info w-1/2 pl-3 pr-[22px] mt-4 mb:pr-4">
+          
+          
+            </div>
+
+
+          <div class="flex justify-end w-1/2 mb:w-full">
+      <label for="upload">
+        <div
+        class="bg-blue-400 text-xl font-medium text-white px-3 py-4 mr-4 rounded hover:bg-blue-500 cursor-pointer "
+      >
+       თავიდან ატვირთვა
+        <input type='file' class="hidden" accept="image/png, image/jpg, image/jpeg" id="upload"/>
+        </div>
+      </div>
+      </div>
+
+    </label>
+
         <div class="flex flex-wrap -mx-3 mt-12 mb-6 mb:mt-20">
+          
           <div class="w-1/2 pl-3 pr-[22px] mb-6 mb:w-full mb:pr-4">
             <label
               class="laptop-name-text block tracking-wide text-black text-lg font-semibold mb-1"
@@ -353,21 +381,24 @@
           </p>
         </div>
         <div class="w-1/2 pl-[22px] pr-3 mb-6 mb:w-full mb:pl-[12px]">
+      <div class="flex">
           <label
-            class="block tracking-wide text-black text-lg font-semibold mb-1"
+            class="memory-text block tracking-wide text-black text-lg font-semibold mb-1"
             for="ram-error"
           >
             მეხსიერების ტიპი
           </label>
 
+          <img src="image/problem.png" alt="problem" class="memory-problem w-6 h-6 ml-2 hidden">
+        </div>
           <div class="flex justify-start mt-4">
           <div class="form-check form-check-inline">
-            <input class="form-check-input appearance-none rounded-full h-5 w-5 border border-[#8AC0E2] checked:bg-blue-300 [#8AC0E2] checked:border-blue-300  transition duration-200 mt-1 bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="inlineRadioStorage" id="inlineRadio1" value="option1">
-            <label class="form-check-label inline-block text-gray-800 mr-16" for="inlineRadio10">SSD</label>
+            <input class="form-check-input appearance-none rounded-full h-5 w-5 border border-[#8AC0E2] checked:bg-blue-300 [#8AC0E2] checked:border-blue-300  transition duration-200 mt-1 bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="memoryStorage" id="memorytype" value="SDD">
+            <label class="form-check-label inline-block text-gray-800 mr-16" for="memorytype">SSD</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input  appearance-none rounded-full h-5 w-5  border border-[#8AC0E2] checked:bg-blue-300 [#8AC0E2] checked:border-blue-300  transition duration-200 mt-1 bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="inlineRadioStorage" id="inlineRadio2" value="option2">
-            <label class="form-check-label inline-block text-gray-800 " for="inlineRadio20">HDD</label>
+            <input class="form-check-input  appearance-none rounded-full h-5 w-5  border border-[#8AC0E2] checked:bg-blue-300 [#8AC0E2] checked:border-blue-300  transition duration-200 mt-1 bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="memoryStorage" id="memorytype" value="HDD">
+            <label class="form-check-label inline-block text-gray-800 " for="memorytype">HDD</label>
           </div>
         </div>
         </div>
@@ -391,7 +422,7 @@
             
             id="grid-laptop-date"
             type="text"
-            placeholder="დდ /თთ / წწწწ"
+            placeholder=" დდ / თთ / წწწწ"
           />
         
         </div>
@@ -399,8 +430,8 @@
         
         <div class="w-1/2 pl-[22px] pr-3 mb-6 mb:w-full mb:pl-[12px]">
           <label
-            class="block tracking-wide text-black text-lg font-semibold mb-1"
-            for="grid-laptop-price"
+            class="price-text block tracking-wide text-black text-lg font-semibold mb-1"
+            for="laptop-price"
           >
             ლეპტოპის ფასი
           </label>
@@ -408,35 +439,38 @@
           <input
             class="py-3 px-4 mb-2 block
             w-full text-base font-normal text-gray-700 bg-white bg-clip-padding border-2 border-solid border-blue-300 rounded transition ease-in-out  focus:text-gray-700 focus:bg-gray-100 focus:border-blue-500 focus:outline-none disabled:border-gray-200"
-            id="grid-laptop-price"
+            id="price"
             type="text"
             placeholder="0000"
           />
           <img src="image/lari.png" alt="lari" class="flex relative -mt-[45px] ml-[310px] mb:ml-[320px]">
         </div>
-          <p class="text-gray-500 text-sm mt-6">
+          <p class="price-error text-gray-500 text-sm mt-6">
             მხოლოდ ციფრები
           </p>
         </div>
       </div>
       <div class="w-1/2 pl-[22px] pr-3 mb-6 mb:w-full mb:pl-1">
+        <div class="flex">
       <label
-      class="block tracking-wide text-black text-lg font-semibold mb-1"
+      class="state-text block tracking-wide text-black text-lg font-semibold mb-1"
       for="grid-first-name"
     >
      ლეპტოპის მდგომარეობა
     </label>
-
+    <img src="image/problem.png" alt="problem" class="state-error memory-problem w-6 h-6 ml-2 hidden">
+  
+  </div>
 
       <div class="flex justify-start mt-4">
 
         <div class="form-check form-check-inline">
-          <input class="form-check-input appearance-none rounded-full h-5 w-5 border border-[#8AC0E2] checked:bg-blue-300 [#8AC0E2] checked:border-blue-300  transition duration-200 mt-1 bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="new">
-          <label class="form-check-label inline-block text-gray-800 mr-16" for="inlineRadio10">ახალი</label>
+          <input class="form-check-input appearance-none rounded-full h-5 w-5 border border-[#8AC0E2] checked:bg-blue-300 [#8AC0E2] checked:border-blue-300  transition duration-200 mt-1 bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="stateStorage" class="stateType" value="new">
+          <label class="form-check-label inline-block text-gray-800 mr-16" for="stateType">ახალი</label>
         </div>
         <div class="form-check form-check-inline">
-          <input class="form-check-input  appearance-none rounded-full h-5 w-5  border border-[#8AC0E2] checked:bg-blue-300 [#8AC0E2] checked:border-blue-300  transition duration-200 mt-1 bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="old">
-          <label class="form-check-label inline-block text-gray-800 " for="inlineRadio20">მეორადი</label>
+          <input class="form-check-input  appearance-none rounded-full h-5 w-5  border border-[#8AC0E2] checked:bg-blue-300 [#8AC0E2] checked:border-blue-300  transition duration-200 mt-1 bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="stateStorage" class="stateType" value="used">
+          <label class="form-check-label inline-block text-gray-800 " for="stateType">მეორადი</label>
         </div>
       </div>
     </div>
