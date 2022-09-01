@@ -555,6 +555,10 @@ video {
   pointer-events: none;
 }
 
+.visible {
+  visibility: visible;
+}
+
 .absolute {
   position: absolute;
 }
@@ -570,6 +574,18 @@ video {
 
 .right-0 {
   right: 0px;
+}
+
+.top-\[10px\] {
+  top: 10px;
+}
+
+.top-\[40px\] {
+  top: 40px;
+}
+
+.top-48 {
+  top: 12rem;
 }
 
 .float-left {
@@ -726,6 +742,10 @@ video {
   margin-top: 12rem;
 }
 
+.-mt-6 {
+  margin-top: -1.5rem;
+}
+
 .block {
   display: block;
 }
@@ -820,6 +840,11 @@ video {
 
 .flex-grow {
   flex-grow: 1;
+}
+
+.translate-x-\[292px\] {
+  --tw-translate-x: 292px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .cursor-none {
@@ -926,6 +951,16 @@ video {
   border-color: rgb(138 192 226 / var(--tw-border-opacity));
 }
 
+.border-red-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(239 68 68 / var(--tw-border-opacity));
+}
+
+.border-\[\#E52F2F\] {
+  --tw-border-opacity: 1;
+  border-color: rgb(229 47 47 / var(--tw-border-opacity));
+}
+
 .bg-blue-400 {
   --tw-bg-opacity: 1;
   background-color: rgb(96 165 250 / var(--tw-bg-opacity));
@@ -963,6 +998,11 @@ video {
 .bg-gray-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#FFEDED\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 237 237 / var(--tw-bg-opacity));
 }
 
 .bg-contain {
@@ -1187,6 +1227,16 @@ video {
   color: rgb(96 165 250 / var(--tw-text-opacity));
 }
 
+.text-red-500 {
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity));
+}
+
+.text-\[\#E52F2F\] {
+  --tw-text-opacity: 1;
+  color: rgb(229 47 47 / var(--tw-text-opacity));
+}
+
 .transition {
   transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
@@ -1326,6 +1376,14 @@ input[type="number"] {
     visibility: hidden;
   }
 
+  .mb\:absolute {
+    position: absolute;
+  }
+
+  .mb\:relative {
+    position: relative;
+  }
+
   .mb\:mt-\[20px\] {
     margin-top: 20px;
   }
@@ -1382,6 +1440,10 @@ input[type="number"] {
     margin-left: 100px;
   }
 
+  .mb\:-mt-6 {
+    margin-top: -1.5rem;
+  }
+
   .mb\:flex {
     display: flex;
   }
@@ -1407,9 +1469,9 @@ input[type="number"] {
     padding: 14px;
   }
 
-  .mb\:px-\[7px\] {
-    padding-left: 7px;
-    padding-right: 7px;
+  .mb\:px-\[5\.25rem\] {
+    padding-left: 5.25rem;
+    padding-right: 5.25rem;
   }
 
   .mb\:px-4 {
@@ -1430,6 +1492,10 @@ input[type="number"] {
     padding-left: 12px;
   }
 
+  .mb\:pt-24 {
+    padding-top: 6rem;
+  }
+
   .mb\:pt-16 {
     padding-top: 4rem;
   }
@@ -1448,10 +1514,6 @@ input[type="number"] {
 
   .mb\:pl-1 {
     padding-left: 0.25rem;
-  }
-
-  .mb\:pt-24 {
-    padding-top: 6rem;
   }
 
   .mb\:text-base {

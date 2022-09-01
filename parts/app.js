@@ -1,6 +1,5 @@
 "use strict";
 //variables
-
 const back = document.querySelector(".back");
 const url_team = "https://pcfy.redberryinternship.ge/api/teams";
 const url_position = "https://pcfy.redberryinternship.ge/api/positions";
@@ -37,9 +36,12 @@ const laptop = document.getElementById("laptop");
 const line = document.querySelector(".line");
 //upload variables
 const upload = document.getElementById("upload");
-const uploadName = document.querySelector(".upload-text");
+const uploadText = document.querySelector(".upload-text");
+const uploadProblem = document.querySelector(".upload-problem");
 const uploadAgain = document.querySelector(".upload-again");
 const uploadInfo = document.querySelector(".upload-info");
+const uploadError = document.querySelector(".upload-error");
+
 const uploaded = document.querySelector(".uploaded");
 const problem = document.querySelector(".problem");
 //laptop Name variables
@@ -90,7 +92,7 @@ back.addEventListener("click", function () {
 let job = [];
 document.getElementById("grid-position").disabled = true;
 
-//function for get data for team
+//function for data get
 function getData(url1, option, id) {
   fetch(url1)
     .then((response) => {
@@ -107,7 +109,7 @@ function getData(url1, option, id) {
       id.innerHTML = output;
     });
 }
-
+//data for team
 getData(url_team, "თიმი", option_team);
 
 //function to get data for position
@@ -167,34 +169,35 @@ $(document).ready(function () {
   });
 });
 
+//regex
 let regexGeorgian = /^[\u10A0-\u10FF]+$/;
 let regexEmail = /^([A-Za-z0-9_\-\.])+\@([redberry])+\.(ge)$/;
 let regexleptopName = /^[a-zA-Z0-9!@#$%^&*()_+=]*$/;
 let regexNumbers = /^\d+$/;
 let regexMobile = /^(\+995)(79\d{7}|5\d{8})$/;
 
+//image upload
 window.addEventListener("load", function () {
-  let upload = `<img src="image/done.png" alt="done" class="check">`;
   document
     .querySelector('input[type="file"]')
-    .addEventListener("change", function () {
+    .addEventListener("click", function () {
       if (this.files && this.files[0]) {
         const img = document.querySelector(".image");
         img.onload = () => {
-          console.log(upload);
-          uploadInfo.innerHTML = upload;
           URL.revokeObjectURL(img.src);
           uploaded.classList.remove("hidden");
           uploadAgain.classList.add("flex");
           uploadAgain.classList.remove("hidden");
-          uploadName.classList.add("hidden");
+          uploadProblem.classList.add("hidden");
         };
+
         let count = this.files[0].size / 1048576;
         count = count.toFixed(2);
-        upload += `<h4 class="img-name">${this.files[0].name},</h4> <p class="mb">${count} mb</p>
-        `;
+        $(".upload-info")
+          .html(`<img src="image/done.png" alt="done" class="check"><h4 class="img-name">${this.files[0].name},</h4> <p class="mb">${count} mb</p>
+        `);
+
         img.src = URL.createObjectURL(this.files[0]);
-        console.log(this.files[0]);
       }
     });
 });
@@ -354,10 +357,6 @@ back2.addEventListener("click", function () {
   mobile2.classList.add("mb:hidden");
 });
 
-function useRegex(input) {
-  console.log(regexMobile.test(input));
-}
-
 done.addEventListener("click", function () {
   //name validation
   laptopNameVal(laptopNameError, laptopName, laptopNameText, laptopName.value);
@@ -375,6 +374,7 @@ done.addEventListener("click", function () {
   radioValidation(storageName, storageError, "memoryStorage");
   //state type validation
   radioValidation(stateName, stateError, "stateStorage");
+  photoValidation();
   //price validation
   numberValidation(priceError, price, priceName, price.value);
   console.log(price.value);
@@ -395,6 +395,17 @@ function laptopNameVal(key1, key2, key3, value) {
   } else {
     key1.textContent = "ლათინური ასოები,ციფრები,!@#$%^&*()_+=";
     correct(key1, key2, key3);
+  }
+}
+
+function photoValidation() {
+  if (upload.value === "") {
+    uploadError.classList.remove("hidden");
+    uploadError.classList.add("mb:relative", "top-48");
+    uploadProblem.classList.remove("border-[#4386A9]", "bg-[#F6F6F6]");
+    uploadProblem.classList.add("border-[#E52F2F]", "bg-[#FFEDED]");
+    uploadText.classList.remove("text-[#4386A9]");
+    uploadText.classList.add("text-[#E52F2F]");
   }
 }
 
