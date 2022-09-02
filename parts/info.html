@@ -95,8 +95,9 @@
               <select
                 class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-4 px-4 rounded text-lg font-semibold tracking-wide"
                 id="grid-state"
+                name="team"
               >
-              <option class="text-xs" selected>თიმი</option>
+              <option class="text-xs" >თიმი</option>
              
               </select>
               <div
@@ -120,9 +121,10 @@
               <select
                 class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-4 px-4 rounded font-semibold text-lg tracking-wide disabled:bg-gray-100"
                 id="grid-position"
+                name="position"
                 disabled
               >
-              <option class="text-xs" selected>პოზიცია</option>
+              <option class="text-xs" >პოზიცია</option>
               </select>
               <div
                 class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-700"
@@ -294,9 +296,10 @@
               <div class="relative mt-[30px] mb:mt-0">
                 <select
                   class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-[12px] px-4 rounded text-lg font-semibold tracking-wide"
+                  name="name"
                   id="grid-brand"
                 >
-                <option class="text-xs" selected>ლეპტოპის ბრენდი</option>
+                <option class="text-xs" >ლეპტოპის ბრენდი</option>
                
                 </select>
                 <div
@@ -326,8 +329,9 @@
       <div class="w-1/3 px-3 mb-6 mt-6 mb:w-full">
       
         <div class="relative mt-[6px]">
-          <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-[10px] px-4 rounded text-lg font-semibold tracking-wide" id="grid-cpu">
-            <option class="text-xs" selected>CPU</option>
+          <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-[10px] px-4 rounded text-lg font-semibold tracking-wide" id="grid-cpu"
+          name="cpu">
+            <option class="text-xs">CPU</option>
           </select>
           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-700">
             <svg class="fill-current h-6 w-9" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"></svg>
@@ -395,11 +399,11 @@
         </div>
           <div class="flex justify-start mt-4">
           <div class="form-check form-check-inline">
-            <input class="form-check-input appearance-none rounded-full h-5 w-5 border border-[#8AC0E2] checked:bg-blue-300 [#8AC0E2] checked:border-blue-300  transition duration-200 mt-1 bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="memoryStorage" id="memorytype" value="SDD">
+            <input class="form-check-input appearance-none rounded-full h-5 w-5 border border-[#8AC0E2] checked:bg-blue-300 [#8AC0E2] checked:border-blue-300  transition duration-200 mt-1 bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="memoryStorage" id="memorytype1" value="SSD">
             <label class="form-check-label inline-block text-gray-800 mr-16" for="memorytype">SSD</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input  appearance-none rounded-full h-5 w-5  border border-[#8AC0E2] checked:bg-blue-300 [#8AC0E2] checked:border-blue-300  transition duration-200 mt-1 bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="memoryStorage" id="memorytype" value="HDD">
+            <input class="form-check-input  appearance-none rounded-full h-5 w-5  border border-[#8AC0E2] checked:bg-blue-300 [#8AC0E2] checked:border-blue-300  transition duration-200 mt-1 bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="memoryStorage" id="memorytype2" value="HDD">
             <label class="form-check-label inline-block text-gray-800 " for="memorytype">HDD</label>
           </div>
         </div>
@@ -467,12 +471,12 @@
       <div class="flex justify-start mt-4">
 
         <div class="form-check form-check-inline">
-          <input class="form-check-input appearance-none rounded-full h-5 w-5 border border-[#8AC0E2] checked:bg-blue-300 [#8AC0E2] checked:border-blue-300  transition duration-200 mt-1 bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="stateStorage" class="stateType" value="new">
-          <label class="form-check-label inline-block text-gray-800 mr-16" for="stateType">ახალი</label>
+          <input class="form-check-input appearance-none rounded-full h-5 w-5 border border-[#8AC0E2] checked:bg-blue-300 [#8AC0E2] checked:border-blue-300  transition duration-200 mt-1 bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="stateStorage" class="stateType" id="stateType1" value="new" >
+          <label class="form-check-label inline-block text-gray-800 mr-16" for="stateType" >ახალი</label>
         </div>
         <div class="form-check form-check-inline">
-          <input class="form-check-input  appearance-none rounded-full h-5 w-5  border border-[#8AC0E2] checked:bg-blue-300 [#8AC0E2] checked:border-blue-300  transition duration-200 mt-1 bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="stateStorage" class="stateType" value="used">
-          <label class="form-check-label inline-block text-gray-800 " for="stateType">მეორადი</label>
+          <input class="form-check-input  appearance-none rounded-full h-5 w-5  border border-[#8AC0E2] checked:bg-blue-300 [#8AC0E2] checked:border-blue-300  transition duration-200 mt-1 bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="radio" name="stateStorage" class="stateType" id="stateType2" value="used" >
+          <label class="form-check-label inline-block text-gray-800 " for="stateType" >მეორადი</label>
         </div>
       </div>
     </div>

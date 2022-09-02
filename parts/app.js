@@ -30,6 +30,7 @@ const phoneErrorMobile = document.querySelector(".phone-error-mobile");
 const person = document.querySelector(".person");
 const next = document.querySelector(".next");
 const des = document.querySelector(".des");
+const date = document.getElementById("grid-laptop-date");
 //info,leptop and line vairables
 const info = document.getElementById("info");
 const laptop = document.getElementById("laptop");
@@ -88,9 +89,56 @@ back.addEventListener("click", function () {
   location.href = "../index.html";
 });
 
-//disable position
-let job = [];
+$(document).on("change", function () {
+  saveData("text");
+  saveData("date");
+  saveData("file");
+
+  $('input[type="radio"]:checked').each(function () {
+    let name = $(this).attr("name");
+    let value = $(this).val();
+    localStorage.setItem(name, value);
+  });
+
+  $("select").each(function () {
+    let id = $(this).attr("name");
+    let value = $(this).val();
+    localStorage.setItem(id, value);
+  });
+
+  $("#grid-state").each(function () {
+    let id = $(this).attr("id");
+    let value =
+      option_team.options[option_team.selectedIndex].getAttribute("id");
+    localStorage.setItem(id, value);
+  });
+
+  $("#grid-position").each(function () {
+    let id = $(this).attr("id");
+    let value =
+      option_position.options[option_position.selectedIndex].getAttribute("id");
+    localStorage.setItem(id, value);
+  });
+
+  $("#grid-brand").each(function () {
+    let id = $(this).attr("id");
+    let value =
+      option_brand.options[option_brand.selectedIndex].getAttribute("id");
+    localStorage.setItem(id, value);
+    console.log(value);
+  });
+
+  function saveData(key) {
+    $(`input[type=${key}]`).each(function () {
+      let id = $(this).attr("id");
+      let value = $(this).val();
+      localStorage.setItem(id, value);
+    });
+  }
+});
+
 document.getElementById("grid-position").disabled = true;
+const brand = [];
 
 //function for data get
 function getData(url1, option, id) {
@@ -99,18 +147,20 @@ function getData(url1, option, id) {
       return response.json();
     })
     .then((data) => {
-      let output = `<option class="text-xs" selected>${option}</option>`;
+      let output = `<option id="" class="text-xs">${option}</option>`;
       for (var job in data);
       {
         for (let i = 0; i < data[job].length; i++) {
-          output += `<option class="text-xs" >${data[job][i].name}</option>`;
+          output += `<option class="text-xs" id=${data[job][i].id}>${data[job][i].name}</option>`;
         }
       }
       id.innerHTML = output;
     });
 }
+
 //data for team
 getData(url_team, "თიმი", option_team);
+let position = [];
 
 //function to get data for position
 function getDataPos(id) {
@@ -119,13 +169,13 @@ function getDataPos(id) {
       return response.json();
     })
     .then((data) => {
-      let output = `<option class="text-xs" >პოზიცია</option>`;
+      let output = `<option id="" class="text-xs" >პოზიცია</option>`;
       for (var job in data);
       {
         for (let i = 0; i < data[job].length; i++) {
           switch (data[job][i].team_id) {
             case id:
-              output += `<option class="text-xs" >${data[job][i].name}</option>`;
+              output += `<option class="text-xs" id=${data[job][i].id}>${data[job][i].name}</option>`;
               break;
           }
         }
@@ -151,19 +201,23 @@ $(document).ready(function () {
         break;
       case "გაყიდვები":
         option_position.disabled = false;
+
         getDataPos(3);
         break;
       case "დიზაინი":
         option_position.disabled = false;
+
         getDataPos(4);
         break;
       case "მარკეტინგი":
         option_position.disabled = false;
+
         getDataPos(5);
         break;
       default:
         option_position.disabled = true;
         option_position.value = "პოზიცია";
+
         break;
     }
   });
@@ -176,58 +230,49 @@ let regexleptopName = /^[a-zA-Z0-9!@#$%^&*()_+=]*$/;
 let regexNumbers = /^\d+$/;
 let regexMobile = /^(\+995)(79\d{7}|5\d{8})$/;
 
-//image upload
-window.addEventListener("load", function () {
-  document
-    .querySelector('input[type="file"]')
-    .addEventListener("click", function () {
-      if (this.files && this.files[0]) {
-        const img = document.querySelector(".image");
-        img.onload = () => {
-          URL.revokeObjectURL(img.src);
-          uploaded.classList.remove("hidden");
-          uploadAgain.classList.add("flex");
-          uploadAgain.classList.remove("hidden");
-          uploadProblem.classList.add("hidden");
-        };
-
-        let count = this.files[0].size / 1048576;
-        count = count.toFixed(2);
-        $(".upload-info")
-          .html(`<img src="image/done.png" alt="done" class="check"><h4 class="img-name">${this.files[0].name},</h4> <p class="mb">${count} mb</p>
+document
+  .querySelector('input[type="file"]')
+  .addEventListener("change", function () {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => {
+      localStorage.setItem("upload", reader.result);
+    });
+    reader.readAsDataURL(this.files[0]);
+    const recentImageDataUrl = localStorage.getItem("upload");
+    document.querySelector(".image").setAttribute("src", recentImageDataUrl);
+    uploaded.classList.remove("hidden");
+    uploadAgain.classList.add("flex");
+    uploadAgain.classList.remove("hidden");
+    uploadProblem.classList.add("hidden");
+    localStorage.setItem("fileName", this.files[0].name);
+    localStorage.setItem("size", this.files[0].size);
+    const fileName = localStorage.getItem("fileName");
+    const size = localStorage.getItem("size");
+    let count = size / 1048576;
+    count = count.toFixed(2);
+    $(
+      ".upload-info"
+    ).html(`<img src="image/done.png" alt="done" class="check"><h4 class="img-name">${fileName},</h4> <p class="mb">${count} mb</p>
         `);
-
-        img.src = URL.createObjectURL(this.files[0]);
-      }
-    });
-});
-
-$(document).on("change", function () {
-  saveData("text");
-  saveData("date");
-  saveData("file");
-
-  $('input[type="radio"]:checked').each(function () {
-    let name = $(this).attr("name");
-    let value = $(this).val();
-    console.log(value);
-    localStorage.setItem(name, value);
   });
 
-  $("select").each(function () {
-    let id = $(this).attr("id");
-    let value = $(this).val();
-    localStorage.setItem(id, value);
-  });
-
-  function saveData(key) {
-    $(`input[type=${key}]`).each(function () {
-      let id = $(this).attr("id");
-      let value = $(this).val();
-      localStorage.setItem(id, value);
-    });
-  }
-});
+// document.addEventListener("DOMContentLoaded", () => {
+//   const recentImageDataUrl = localStorage.getItem("upload");
+//   if (recentImageDataUrl) {
+//     document.querySelector(".image").setAttribute("src", recentImageDataUrl);
+//     uploaded.classList.remove("hidden");
+//     uploadAgain.classList.add("flex");
+//     uploadAgain.classList.remove("hidden");
+//     uploadProblem.classList.add("hidden");
+//     const fileName = localStorage.getItem("fileName");
+//     const size = localStorage.getItem("size");
+//     let count = size / 1048576;
+//     count = count.toFixed(2);
+//     $(".upload-info")
+//       .html(`<img src="image/done.png" alt="done" class="check"><h4 class="img-name">${fileName},</h4> <p class="mb">${count} mb</p>
+//       `);
+//   }
+// });
 
 next.addEventListener("click", function () {
   //first Name validation
@@ -253,10 +298,51 @@ next.addEventListener("click", function () {
     info.classList.add("hidden");
     laptop.classList.remove("hidden");
     laptop.classList.add("flex");
-    getData(url_brand, "ლეპტოპის ბრენდი", option_brand);
-    getData(url_cpu, "CPU", option_cpu);
   }
 });
+
+getData(url_brand, "ლეპტოპის ბრენდი", option_brand);
+getData(url_cpu, "CPU", option_cpu);
+
+document.addEventListener("DOMContentLoaded", () => {
+  onLoad("first-name", firstName);
+  onLoad("last-name", lastName);
+  onLoad("email", email);
+  onLoad("phone", phone);
+  onLoad("laptop-name", laptopName);
+  onLoad("cores", cores);
+  onLoad("threads", threads);
+  onLoad("ram", ram);
+  onLoad("grid-laptop-date", date);
+  onLoad("price", price);
+
+  function onLoad(key, value) {
+    const Item = localStorage.getItem(`${key}`);
+    if (Item) {
+      value.value = Item;
+    }
+  }
+  const radio1 = localStorage.getItem("memoryStorage");
+  const radio2 = localStorage.getItem("stateStorage");
+  const brand = localStorage.getItem("name");
+
+  if (brand === "HP") {
+    document.querySelector("#grid-brand").options[2].selected = true;
+  }
+  if (radio1 === "SSD") {
+    document.getElementById("memorytype1").checked = true;
+  } else if (radio1 === "HDD") {
+    document.getElementById("memorytype2").checked = true;
+  }
+
+  if (radio2 === "new") {
+    document.getElementById("stateType1").checked = true;
+  } else if (radio2 === "used") {
+    document.getElementById("stateType2").checked = true;
+  }
+});
+
+console.log(JSON.parse(localStorage.getItem("name")));
 
 function error(key1, key2, key3) {
   key1.classList.remove("text-gray-500");
@@ -377,7 +463,6 @@ done.addEventListener("click", function () {
   photoValidation();
   //price validation
   numberValidation(priceError, price, priceName, price.value);
-  console.log(price.value);
 
   // donePage.classList.add("hidden");
   // postman.classList.add("hidden");
@@ -437,3 +522,39 @@ function radioValidation(key1, key2, name) {
 home.addEventListener("click", function () {
   location.href = "/index.html";
 });
+
+const token = "698a69cb866e5fe9c1c7005ca98e60f2";
+
+fetch("https://pcfy.redberryinternship.ge/api/laptop/create", {
+  method: "POST",
+  body: JSON.stringify({
+    name: localStorage.getItem("first-name"),
+    surname: localStorage.getItem("last-name"),
+    team_id: localStorage.getItem("grid-state"),
+    position_id: localStorage.getItem("grid-position"),
+    email: localStorage.getItem("email"),
+    phone_number: localStorage.getItem("phone"),
+    token: token,
+    laptop_name: localStorage.getItem("laptop-name"),
+    laptop_image: localStorage.getItem("upload"),
+    laptop_brand_id: localStorage.getItem("grid-brand"),
+    laptop_cpu: localStorage.getItem("cpu"),
+    laptop_cpu_cores: localStorage.getItem("cores"),
+    laptop_cpu_threads: localStorage.getItem("threads"),
+    laptop_ram: localStorage.getItem("ram"),
+    laptop_hard_drive_type: localStorage.getItem("memoryStorage"),
+    laptop_state: localStorage.getItem("stateStorage"),
+    laptop_price: localStorage.getItem("price"),
+  }),
+  headers: {
+    accept: "application/json",
+    "Content-Type": "application/json",
+  },
+})
+  .then(function (response) {
+    return response.text();
+  })
+  .then(function (text) {
+    console.log(text);
+  })
+  .catch(function (error) {});
