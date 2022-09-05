@@ -84,7 +84,8 @@ const popup = document.querySelector(".popup");
 const postman = document.querySelector(".postman");
 const home = document.querySelector(".home");
 const formInfo = document.querySelector("#form-info");
-const token = "698a69cb866e5fe9c1c7005ca98e60f2";
+const token = "80bfeec723ba59bb29f47932cad6f79d";
+const table = document.querySelector(".table");
 
 //go from form page to landing page
 back.addEventListener("click", function () {
@@ -129,9 +130,8 @@ $("form").on("change", function () {
     localStorage.setItem(name, value);
   });
 });
-//parse data
+
 const form = JSON.parse(localStorage.getItem("myForm"));
-console.log(form);
 
 //api array data
 document.getElementById("grid-position").disabled = true;
@@ -296,6 +296,13 @@ $(document).ready(function () {
   });
 });
 let file;
+//data upload
+const formData = new FormData();
+let photo = localStorage.getItem("recent");
+
+for (const name in form) {
+  formData.append(name, form[name]);
+}
 
 //regex
 let regexGeorgian = /^[\u10A0-\u10FF]+$/;
@@ -306,90 +313,66 @@ let regexMobile = /^(\+995)(79\d{7}|5\d{8})$/;
 
 const dropArea = document.querySelector(".drag-area");
 
-// dropArea.addEventListener("dragover", (e) => {
-//   e.preventDefault();
-//   console.log("file is over");
-// });
+dropArea.addEventListener("dragover", (e) => {
+  e.preventDefault();
+  console.log("file is over");
+});
 
-// dropArea.addEventListener("dragleave", () => {
-//   console.log("file is outside from dragarea");
-// });
+dropArea.addEventListener("dragleave", () => {
+  console.log("file is outside from dragarea");
+});
 
-// dropArea.addEventListener("drop", (e) => {
-//   e.preventDefault();
-//   file = e.dataTransfer.files[0];
-//   let fileType = file.type;
-//   console.log(file);
-//   let validExtension = ["image/jpeg", "image/jpg", "image/png"];
+dropArea.addEventListener("drop", (e) => {
+  e.preventDefault();
+  file = e.dataTransfer.files[0];
+  let fileType = file.type;
+  console.log(file);
+  let validExtension = ["image/jpeg", "image/jpg", "image/png"];
 
-//   if (validExtension.includes(fileType)) {
-//     let reader = new FileReader();
-//     reader.onload = () => {
-//       uploaded.classList.remove("hidden");
-//       uploadAgain.classList.add("flex");
-//       uploadAgain.classList.remove("hidden");
-//       uploadProblem.classList.add("hidden");
-//       let fileURL = reader.result;
-//       document.querySelector(".image").setAttribute("src", fileURL);
-//       console.log(file);
-//       localStorage.setItem("urlDrop", fileURL);
-//       localStorage.setItem("image", JSON.stringify(file));
-//     };
-//     let count = file.size / 1048576;
-//     count = count.toFixed(2);
-//     $(".upload-info")
-//       .html(`<img src="image/done.png" alt="done" class="check"><h4 class="img-name">${file.name},</h4> <p class="mb">${count} mb</p>
-//         `);
-//     reader.readAsDataURL(file);
-//   }
-// });
-
-window.addEventListener("load", function () {
-  document.querySelector("#upload").addEventListener("change", function () {
-    const img = document.querySelector(".image");
-
-    img.onload = (e) => {
-      console.log(this.files[0]);
+  if (validExtension.includes(fileType)) {
+    formData.append("laptop_image", e.dataTransfer.files[0]);
+    let reader = new FileReader();
+    reader.onload = () => {
       uploaded.classList.remove("hidden");
       uploadAgain.classList.add("flex");
       uploadAgain.classList.remove("hidden");
       uploadProblem.classList.add("hidden");
-      URL.revokeObjectURL(img.src);
-      localStorage.setItem("recent", JSON.stringify(img));
+      let fileURL = reader.result;
+      document.querySelector(".image").setAttribute("src", fileURL);
     };
-    let count = this.files[0].size / 1048576;
+    let count = file.size / 1048576;
+    count = count.toFixed(2);
+    $(".upload-info")
+      .html(`<img src="image/done.png" alt="done" class="check"><h4 class="img-name">${file.name},</h4> <p class="mb">${count} mb</p>
+        `);
+    reader.readAsDataURL(file);
+  }
+});
+
+$(function () {
+  $("#upload").change(function (e) {
+    var x = URL.createObjectURL(e.target.files[0]);
+    $(".image").attr("src", x);
+    uploaded.classList.remove("hidden");
+    uploadAgain.classList.add("flex");
+    uploadAgain.classList.remove("hidden");
+    uploadProblem.classList.add("hidden");
+
+    formData.append("laptop_image", e.target.files[0]);
+    let count = e.target.files[0].size / 1048576;
     count = count.toFixed(2);
     $(
       ".upload-info"
-    ).html(`<img src="image/done.png" alt="done" class="check"><h4 class="img-name">${this.files[0].name},</h4> <p class="mb">${count} mb</p>
+    ).html(`<img src="image/done.png" alt="done" class="check"><h4 class="img-name">${e.target.files[0].name},</h4> <p class="mb">${count} mb</p>
         `);
-
-    img.src = URL.createObjectURL(this.files[0]);
   });
 });
 
-// document.querySelector("#upload").addEventListener("change", function (e) {
-//   const reader = new FileReader();
-//   reader.addEventListener("load", (e) => {
-//     upload.image = reader.result;
-//     uploaded.classList.remove("hidden");
-//     uploadAgain.classList.add("flex");
-//     uploadAgain.classList.remove("hidden");
-//     uploadProblem.classList.add("hidden");
-//     document.querySelector(".image").setAttribute("src", reader.result);
-//     console.log(e.target.files[0]);
-//   });
+for (var pair of formData.entries()) {
+  console.log(pair);
+}
 
-// let count = this.files[0].size / 1048576;
-// count = count.toFixed(2);
-// $(
-//   ".upload-info"
-// ).html(`<img src="image/done.png" alt="done" class="check"><h4 class="img-name">${this.files[0].name},</h4> <p class="mb">${count} mb</p>
-//     `);
-
-//   reader.readAsDataURL(this.files[0]);
-// });
-
+var retrieveObject = localStorage.getItem("recent");
 next.addEventListener("click", function () {
   //first Name validation
   nameVal(firstNameError, firstName, firstNameText, firstName.value);
@@ -436,19 +419,20 @@ getData(
 );
 getData(url_cpu, "CPU", option_cpu, "cpuArray", cpuArray, "cpu");
 
-console.log(form.name);
-
+//content load
 document.addEventListener("DOMContentLoaded", () => {
-  loadContent(form.name, firstName);
-  loadContent(form.surname, lastName);
-  loadContent(form.phone_number, phone);
-  loadContent(form.email, email);
-  loadContent(form.laptop_name, laptopName);
-  loadContent(form.laptop_ram, ram);
-  loadContent(form.laptop_price, price);
-  loadContent(form.laptop_cpu_threads, threads);
-  loadContent(form.laptop_cpu_cores, cores);
-  loadContent(form.date, date);
+  if (form !== null) {
+    loadContent(form.name, firstName);
+    loadContent(form.surname, lastName);
+    loadContent(form.phone_number, phone);
+    loadContent(form.email, email);
+    loadContent(form.laptop_name, laptopName);
+    loadContent(form.laptop_ram, ram);
+    loadContent(form.laptop_price, price);
+    loadContent(form.laptop_cpu_threads, threads);
+    loadContent(form.laptop_cpu_cores, cores);
+    loadContent(form.date, date);
+  }
 
   function loadContent(key, value) {
     if (key) {
@@ -470,16 +454,8 @@ document.addEventListener("DOMContentLoaded", () => {
   } else if (radio2 === "used") {
     document.getElementById("stateType2").checked = true;
   }
-  const recent = localStorage.getItem("urlDrop");
-  if (recent) {
-    document.querySelector(".image").setAttribute("src", recent);
-    uploaded.classList.remove("hidden");
-    uploadAgain.classList.add("flex");
-    uploadAgain.classList.remove("hidden");
-    uploadProblem.classList.add("hidden");
-  }
 });
-
+//style error
 function error(key1, key2, key3) {
   key1.classList.remove("text-gray-500");
   key1.classList.add("text-red-500");
@@ -488,7 +464,7 @@ function error(key1, key2, key3) {
   key3.classList.remove("text-black");
   key3.classList.add("text-red-500");
 }
-
+//style correct
 function correct(key1, key2, key3) {
   key1.classList.remove("text-red-500");
   key1.classList.add("text-gray-500");
@@ -543,7 +519,7 @@ function emailVal(key1, key2, key3, value) {
     correct(key1, key2, key3);
   }
 }
-
+//mobile validaiton
 function mobileVal(key1, key2, key3, value) {
   if (value === "") {
     key1.textContent = "სავალდებულოა";
@@ -565,7 +541,7 @@ function mobileVal(key1, key2, key3, value) {
     phoneErrorMobile.classList.add("text-gray-500");
   }
 }
-
+//back to info page
 back2.addEventListener("click", function () {
   info.classList.remove("hidden");
   person.classList.remove("text-gray-700");
@@ -600,22 +576,46 @@ done.addEventListener("click", function () {
   photoValidation();
   //price validation
   numberValidation(priceError, price, priceName, price.value);
-
+  //check all filed
   if (
     $("#laptop-name").hasClass("border-blue-300") &&
     $("#cores").hasClass("border-blue-300") &&
     $("#threads").hasClass("border-blue-300") &&
     $("#grid-cpu").hasClass("border-gray-200") &&
     $("#grid-brand").hasClass("border-gray-200") &&
-    $("#ram").hasClass("border-blue-300")
+    $("#ram").hasClass("border-blue-300") &&
+    $(".upload-problem").hasClass("border-[#4386A9]") &&
+    $(".memory-text").hasClass("text-black") &&
+    $(".state-text").hasClass("text-black") &&
+    $("#price").hasClass("border-blue-300")
   ) {
     donePage.classList.add("hidden");
     postman.classList.add("hidden");
     popup.classList.add("flex");
     popup.classList.remove("hidden");
+    //post data
+    const url = "https://pcfy.redberryinternship.ge/api/laptop/create";
+
+    fetch(url, {
+      method: "POST",
+      header: {
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data",
+      },
+      body: formData,
+    })
+      .then(function (response) {
+        return response.text();
+      })
+      .then(function (text) {
+        console.log(text);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
   }
 });
-
+//lapotp name validation
 function laptopNameVal(key1, key2, key3, value) {
   if (value === "") {
     key1.textContent = "სავალდებულოა";
@@ -628,37 +628,7 @@ function laptopNameVal(key1, key2, key3, value) {
     correct(key1, key2, key3);
   }
 }
-
-const formData = new FormData();
-let image = localStorage.getItem("image");
-
-console.log(image);
-
-for (const name in form) {
-  formData.append(name, form[name]);
-}
-formData.append("laptop_image", image);
-
-const url = "https://pcfy.redberryinternship.ge/api/laptop/create";
-
-fetch(url, {
-  method: "POST",
-  header: {
-    Accept: "application/json",
-    "Content-Type": "multipart/form-data",
-  },
-  body: formData,
-})
-  .then(function (response) {
-    return response.text();
-  })
-  .then(function (text) {
-    console.log(text);
-  })
-  .catch(function (error) {
-    console.error(error);
-  });
-
+//photo validation
 function photoValidation() {
   if (upload.value === "") {
     uploadError.classList.remove("hidden");
@@ -669,7 +639,7 @@ function photoValidation() {
     uploadText.classList.add("text-[#E52F2F]");
   }
 }
-
+//only number input validation
 function numberValidation(key1, key2, key3, value) {
   if (!value) {
     key1.textContent = "სავალდებულოა";
@@ -682,7 +652,7 @@ function numberValidation(key1, key2, key3, value) {
     correct(key1, key2, key3);
   }
 }
-
+//radio validaiton
 function radioValidation(key1, key2, name) {
   if ($(`:input[name=${name}]`).is(":checked") == false && $) {
     key1.classList.remove("text-black");
@@ -694,7 +664,13 @@ function radioValidation(key1, key2, name) {
     key2.classList.add("hidden");
   }
 }
-
+//home page
 home.addEventListener("click", function () {
   location.href = "../index.html";
+  localStorage.clear();
+});
+//list page
+table.addEventListener("click", function () {
+  location.href = "./list.html";
+  localStorage.clear();
 });
