@@ -84,8 +84,9 @@ const popup = document.querySelector(".popup");
 const postman = document.querySelector(".postman");
 const home = document.querySelector(".home");
 const formInfo = document.querySelector("#form-info");
-const token = "80bfeec723ba59bb29f47932cad6f79d";
+const token = "926ae575c2fa4a5177bad4ace85ac5fa";
 const table = document.querySelector(".table");
+const formData = new FormData();
 
 //go from form page to landing page
 back.addEventListener("click", function () {
@@ -117,6 +118,19 @@ $("form").on("change", function () {
   };
 
   localStorage.setItem("myForm", JSON.stringify(myForm));
+
+  const dataSend = JSON.parse(localStorage.getItem("myForm"));
+
+  console.log(dataSend);
+
+  for (const name in dataSend) {
+    formData.append(name, dataSend[name]);
+  }
+
+  for (var pair of formData.entries()) {
+    console.log(pair);
+  }
+
   //select local storage
   $("select").each(function () {
     let id = $(this).attr("name");
@@ -297,12 +311,8 @@ $(document).ready(function () {
 });
 let file;
 //data upload
-const formData = new FormData();
-let photo = localStorage.getItem("recent");
 
-for (const name in form) {
-  formData.append(name, form[name]);
-}
+let photo = localStorage.getItem("recent");
 
 //regex
 let regexGeorgian = /^[\u10A0-\u10FF]+$/;
@@ -367,10 +377,6 @@ $(function () {
         `);
   });
 });
-
-for (var pair of formData.entries()) {
-  console.log(pair);
-}
 
 var retrieveObject = localStorage.getItem("recent");
 next.addEventListener("click", function () {
@@ -593,6 +599,7 @@ done.addEventListener("click", function () {
     postman.classList.add("hidden");
     popup.classList.add("flex");
     popup.classList.remove("hidden");
+    localStorage.clear();
     //post data
     const url = "https://pcfy.redberryinternship.ge/api/laptop/create";
 
@@ -637,6 +644,9 @@ function photoValidation() {
     uploadProblem.classList.add("border-[#E52F2F]", "bg-[#FFEDED]");
     uploadText.classList.remove("text-[#4386A9]");
     uploadText.classList.add("text-[#E52F2F]");
+  } else if (upload.value !== "") {
+    uploadProblem.classList.remove("border-[#E52F2F]", "bg-[#FFEDED]");
+    uploadProblem.classList.add("border-[#4386A9]", "bg-[#F6F6F6]");
   }
 }
 //only number input validation

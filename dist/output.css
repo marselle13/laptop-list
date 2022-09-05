@@ -572,10 +572,6 @@ video {
   right: 0px;
 }
 
-.top-48 {
-  top: 12rem;
-}
-
 .float-left {
   float: left;
 }
@@ -987,11 +983,6 @@ video {
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
 
-.border-red-500 {
-  --tw-border-opacity: 1;
-  border-color: rgb(239 68 68 / var(--tw-border-opacity));
-}
-
 .border-\[\#4386A9\] {
   --tw-border-opacity: 1;
   border-color: rgb(67 134 169 / var(--tw-border-opacity));
@@ -1000,6 +991,11 @@ video {
 .border-\[\#8AC0E2\] {
   --tw-border-opacity: 1;
   border-color: rgb(138 192 226 / var(--tw-border-opacity));
+}
+
+.border-red-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(239 68 68 / var(--tw-border-opacity));
 }
 
 .border-\[\#E52F2F\] {
@@ -1049,11 +1045,6 @@ video {
 .bg-\[\#EAFAFF\] {
   --tw-bg-opacity: 1;
   background-color: rgb(234 250 255 / var(--tw-bg-opacity));
-}
-
-.bg-\[\#E52F2F\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(229 47 47 / var(--tw-bg-opacity));
 }
 
 .bg-\[\#FFEDED\] {
@@ -1467,10 +1458,6 @@ input[type="number"] {
 
   .mb\:invisible {
     visibility: hidden;
-  }
-
-  .mb\:relative {
-    position: relative;
   }
 
   .mb\:my-4 {
