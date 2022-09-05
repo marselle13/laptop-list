@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../dist/output.css" rel="stylesheet" />
+    <title>ჩანაწერის სია</title>
+  </head>
+  <body class="bg-white">
+    <button
+      type="button"
+      class="back inline-block rounded-full bg-gray-300 leading-normal uppercase w-12 h-12 mt-12 ml-16 mb:mt-[20px] mb:ml-0 mb:pb-[20px] mb:bg-white"
+    >
+      <svg
+        class="h-8 w-12 mx-auto text-black"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="currentColor"
+        fill="none"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" />
+        <polyline points="15 6 9 12 15 18" />
+      </svg>
+    </button>
+    <div
+      class="flex p-4 justify-center flex-row space-x-8 -mt-8 text-lg font-bold"
+    >
+      <div
+        class="head text-black text-3xl font-bold mb:text-lg mb:-mt-8"
+        aria-current="page"
+      >
+        ჩანაწერის სია
+      </div>
+    </div>
+
+    <div class="flex justify-center" id="list">
+      <div class="w-full max-w-7xl pt-24 mb:pt-12 mb:px-2" id="list-info">
+        <div class="mb:-mt-10 hidden">
+          <div class="card flex bg-[#EAFAFF] p-4 rounded-lg">
+            <img
+              class="flex object-cover h-44 w-1/2 rounded-l-lg"
+              src="image/saf.png"
+              alt=""
+            />
+            <div class="justify-between p-4 leading-normal">
+              <h5
+                class="mb-2 text-sm font-bold tracking-tight text-gray-900 w-full"
+              >
+                ირინე ჩანქსელიანი
+              </h5>
+              <p class="text-lg text-gray-700 mb-12">pentium 2</p>
+
+              <div class="more text-blue-300 underline cursor-pointer" href="">
+                მეტის ნახვა
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap -mx-3 mb-6 mb:-mt-10">
+          <div class="flex w-1/2 pr-3 pl-[12px] mb-6 mb:w-full">
+            <img src="image/df.png" alt="" class="" />
+          </div>
+
+          <div
+            class="grid w-1/2 mb:w-full grid-cols-2 grid-rows-5 gap-[40px] text-2xl p-16 mb:text-sm mb:p-4 mb:gap-[6px]"
+          >
+            <div>სახელი:</div>
+            <div class="text-gray-400">აკაკი წერეთელი</div>
+            <div>თიმი:</div>
+            <div class="text-gray-400">დიზაინერები</div>
+            <div>პოზიცია:</div>
+            <div class="text-gray-400">ილუსტრატორი</div>
+            <div>მეილი:</div>
+            <div class="text-gray-400">ako@redberry.ge</div>
+            <div>ტელ.ნომერი:</div>
+            <div class="text-gray-400">+995583452833</div>
+          </div>
+        </div>
+        <div class="line flex-grow h-px bg-gray-300 my-16 mb:my-4"></div>
+
+        <div class="flex flex-wrap mb-6 mb:-mt-14">
+          <div
+            class="grid w-1/2 mb:w-full grid-cols-2 grid-rows-4 gap-[40px] text-2xl pt-16 mb:text-sm mb:gap-[6px]"
+          >
+            <div>ლეპტოპის სახელი:</div>
+            <div class="text-gray-400">Razor Blade</div>
+            <div>ლეპტოპის ბრენდი:</div>
+            <div class="text-gray-400">HP</div>
+            <div>RAM:</div>
+            <div class="text-gray-400">16</div>
+            <div>მეხსიერების ტიპი:</div>
+            <div class="text-gray-400">SSD</div>
+          </div>
+
+          <div
+            class="grid w-1/2 mb:w-full grid-cols-2 grid-rows-3 gap-[40px] text-2xl p-16 mb:text-sm mb:p-0 mb:gap-[4px]"
+          >
+            <div>CPU:</div>
+            <div class="text-gray-400">intel 5</div>
+            <div>CPU-s ბირთვი:</div>
+            <div class="text-gray-400">13</div>
+            <div>CPU-ს ნაკადი</div>
+            <div class="text-gray-400">67</div>
+          </div>
+        </div>
+        <div class="line flex-grow h-px bg-gray-300 my-16 mb:my-4"></div>
+
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <div
+            class="grid w-1/2 mb:w-full grid-cols-2 grid-rows-2 gap-[38px] text-2xl mb:text-sm mb:pl-4 mb:gap-[6px]"
+          >
+            <div class="" id="desktop">ლეპტოპის მდგომარეობა:</div>
+            <div class="" id="mobile">მდგომარეობა:</div>
+            <div class="text-gray-400">მეორადი</div>
+            <div class="mb:-mt-1">ლეპტოპის ფასი:</div>
+            <div class="mb:-mt-1 text-gray-400">1500₾</div>
+          </div>
+          <div
+            class="grid w-1/2 mb:w-full grid-cols-2 grid-rows-2 gap-[30px] text-2xl pl-16 mb:text-sm mb:pl-4 mb:gap-[6px]"
+          >
+            <div class="">შეძენის რიცხვი:</div>
+            <div class="text-gray-400">12/06/2130</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.js"
+      integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+      crossorigin="anonymous"
+    ></script>
+    <script src="list.js"></script>
+  </body>
+</html>

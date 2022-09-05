@@ -1,4 +1,5 @@
 "use strict";
+
 //variables
 const back = document.querySelector(".back");
 const url_team = "https://pcfy.redberryinternship.ge/api/teams";
@@ -83,65 +84,64 @@ const popup = document.querySelector(".popup");
 const postman = document.querySelector(".postman");
 const home = document.querySelector(".home");
 const formInfo = document.querySelector("#form-info");
+const token = "698a69cb866e5fe9c1c7005ca98e60f2";
 
-//go on add page from landing pageeName
+//go from form page to landing page
 back.addEventListener("click", function () {
   location.href = "../index.html";
 });
 
-$(document).on("change", function () {
-  saveData("text");
-  saveData("date");
-  saveData("file");
+//local storage
+$("form").on("change", function () {
+  const myForm = {
+    name: firstName.value,
+    surname: lastName.value,
+    team_id: option_team.options[option_team.selectedIndex].getAttribute("id"),
+    position_id:
+      option_position.options[option_position.selectedIndex].getAttribute("id"),
+    phone_number: phone.value,
+    email: email.value,
+    token: token,
+    laptop_name: laptopName.value,
+    laptop_brand_id:
+      option_brand.options[option_brand.selectedIndex].getAttribute("id"),
+    laptop_cpu: option_cpu.value,
+    laptop_cpu_cores: cores.value,
+    laptop_cpu_threads: threads.value,
+    laptop_ram: ram.value,
+    laptop_hard_drive_type: localStorage.getItem("memoryStorage"),
+    laptop_state: localStorage.getItem("stateStorage"),
+    date: date.value,
+    laptop_price: price.value,
+  };
 
-  $('input[type="radio"]:checked').each(function () {
-    let name = $(this).attr("name");
-    let value = $(this).val();
-    localStorage.setItem(name, value);
-  });
-
+  localStorage.setItem("myForm", JSON.stringify(myForm));
+  //select local storage
   $("select").each(function () {
     let id = $(this).attr("name");
     let value = $(this).val();
     localStorage.setItem(id, value);
   });
-
-  $("#grid-state").each(function () {
-    let id = $(this).attr("id");
-    let value =
-      option_team.options[option_team.selectedIndex].getAttribute("id");
-    localStorage.setItem(id, value);
+  //radio local storage
+  $('input[type="radio"]:checked').each(function () {
+    let name = $(this).attr("name");
+    let value = $(this).val();
+    localStorage.setItem(name, value);
   });
-
-  $("#grid-position").each(function () {
-    let id = $(this).attr("id");
-    let value =
-      option_position.options[option_position.selectedIndex].getAttribute("id");
-    localStorage.setItem(id, value);
-  });
-
-  $("#grid-brand").each(function () {
-    let id = $(this).attr("id");
-    let value =
-      option_brand.options[option_brand.selectedIndex].getAttribute("id");
-    localStorage.setItem(id, value);
-    console.log(value);
-  });
-
-  function saveData(key) {
-    $(`input[type=${key}]`).each(function () {
-      let id = $(this).attr("id");
-      let value = $(this).val();
-      localStorage.setItem(id, value);
-    });
-  }
 });
+//parse data
+const form = JSON.parse(localStorage.getItem("myForm"));
+console.log(form);
 
+//api array data
 document.getElementById("grid-position").disabled = true;
-const brand = [];
+let brandArray = [];
+let teamArray = [];
+let cpuArray = [];
+let positionArray = [];
 
 //function for data get
-function getData(url1, option, id) {
+function getData(url1, option, id, key, arrayItem, localInfo) {
   fetch(url1)
     .then((response) => {
       return response.json();
@@ -151,45 +151,60 @@ function getData(url1, option, id) {
       for (var job in data);
       {
         for (let i = 0; i < data[job].length; i++) {
-          output += `<option class="text-xs" id=${data[job][i].id}>${data[job][i].name}</option>`;
+          arrayItem.push(data[job][i]);
+          localStorage.setItem(key, JSON.stringify(arrayItem));
         }
       }
+      let obj = JSON.parse(localStorage.getItem(key));
+      for (var items in obj) {
+        output += `<option class="text-xs" id=${obj[items].id}>${obj[items].name}</option>`;
+      }
+      const value = localStorage.getItem(`${localInfo}`);
+
       id.innerHTML = output;
+      if (value) {
+        id.value = value;
+      }
     });
 }
+//team data
+getData(url_team, "თიმი", option_team, "teamArray", teamArray, "team");
 
-//data for team
-getData(url_team, "თიმი", option_team);
-let position = [];
-
-//function to get data for position
-function getDataPos(id) {
-  fetch(url_position)
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      let output = `<option id="" class="text-xs" >პოზიცია</option>`;
-      for (var job in data);
-      {
-        for (let i = 0; i < data[job].length; i++) {
-          switch (data[job][i].team_id) {
-            case id:
-              output += `<option class="text-xs" id=${data[job][i].id}>${data[job][i].name}</option>`;
-              break;
+//onload event
+window.onload = function () {
+  function getDataPos(id) {
+    fetch(url_position)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        let output = `<option id="" class="text-xs" selected>პოზიცია</option>`;
+        for (var job in data);
+        {
+          for (let i = 0; i < data[job].length; i++) {
+            positionArray.push(data[job][i]);
+            localStorage.setItem(
+              "positionArray",
+              JSON.stringify(positionArray)
+            );
+            switch (data[job][i].team_id) {
+              case id:
+                output += `<option class="text-xs" id=${data[job][i].id}>${data[job][i].name}</option>`;
+                break;
+            }
           }
         }
-      }
-      option_position.innerHTML = output;
-    });
-}
+        option_position.innerHTML = output;
 
-//get special data
+        let position = localStorage.getItem("position");
+        if (position) {
+          option_position.value = position;
+        }
+      });
+  }
 
-$(document).ready(function () {
-  $("#grid-state").change(function () {
-    let val = $(this).val();
-
+  const val = localStorage.getItem("team");
+  if (val !== "თიმი") {
     switch (val) {
       case "დეველოპერი":
         option_position.disabled = false;
@@ -217,11 +232,70 @@ $(document).ready(function () {
       default:
         option_position.disabled = true;
         option_position.value = "პოზიცია";
+        break;
+    }
+  }
+};
 
+//filter team positon
+function getDataPos(id) {
+  fetch(url_position)
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      let output = `<option id="" class="text-xs" selected>პოზიცია</option>`;
+      for (var job in data);
+      {
+        for (let i = 0; i < data[job].length; i++) {
+          positionArray.push(data[job][i]);
+          localStorage.setItem("positionArray", JSON.stringify(positionArray));
+          switch (data[job][i].team_id) {
+            case id:
+              output += `<option class="text-xs" id=${data[job][i].id}>${data[job][i].name}</option>`;
+              break;
+          }
+        }
+      }
+      option_position.innerHTML = output;
+    });
+}
+//change
+$(document).ready(function () {
+  $("#grid-state").change(function () {
+    let change = option_team.value;
+    switch (change) {
+      case "დეველოპერი":
+        option_position.disabled = false;
+        getDataPos(1);
+        break;
+      case "HR":
+        option_position.disabled = false;
+        getDataPos(2);
+        break;
+      case "გაყიდვები":
+        option_position.disabled = false;
+
+        getDataPos(3);
+        break;
+      case "დიზაინი":
+        option_position.disabled = false;
+
+        getDataPos(4);
+        break;
+      case "მარკეტინგი":
+        option_position.disabled = false;
+
+        getDataPos(5);
+        break;
+      default:
+        option_position.disabled = true;
+        option_position.value = "პოზიცია";
         break;
     }
   });
 });
+let file;
 
 //regex
 let regexGeorgian = /^[\u10A0-\u10FF]+$/;
@@ -230,48 +304,90 @@ let regexleptopName = /^[a-zA-Z0-9!@#$%^&*()_+=]*$/;
 let regexNumbers = /^\d+$/;
 let regexMobile = /^(\+995)(79\d{7}|5\d{8})$/;
 
-document
-  .querySelector('input[type="file"]')
-  .addEventListener("change", function () {
-    const reader = new FileReader();
-    reader.addEventListener("load", () => {
-      localStorage.setItem("upload", reader.result);
-    });
-    reader.readAsDataURL(this.files[0]);
-    const recentImageDataUrl = localStorage.getItem("upload");
-    document.querySelector(".image").setAttribute("src", recentImageDataUrl);
-    uploaded.classList.remove("hidden");
-    uploadAgain.classList.add("flex");
-    uploadAgain.classList.remove("hidden");
-    uploadProblem.classList.add("hidden");
-    localStorage.setItem("fileName", this.files[0].name);
-    localStorage.setItem("size", this.files[0].size);
-    const fileName = localStorage.getItem("fileName");
-    const size = localStorage.getItem("size");
-    let count = size / 1048576;
+const dropArea = document.querySelector(".drag-area");
+
+// dropArea.addEventListener("dragover", (e) => {
+//   e.preventDefault();
+//   console.log("file is over");
+// });
+
+// dropArea.addEventListener("dragleave", () => {
+//   console.log("file is outside from dragarea");
+// });
+
+// dropArea.addEventListener("drop", (e) => {
+//   e.preventDefault();
+//   file = e.dataTransfer.files[0];
+//   let fileType = file.type;
+//   console.log(file);
+//   let validExtension = ["image/jpeg", "image/jpg", "image/png"];
+
+//   if (validExtension.includes(fileType)) {
+//     let reader = new FileReader();
+//     reader.onload = () => {
+//       uploaded.classList.remove("hidden");
+//       uploadAgain.classList.add("flex");
+//       uploadAgain.classList.remove("hidden");
+//       uploadProblem.classList.add("hidden");
+//       let fileURL = reader.result;
+//       document.querySelector(".image").setAttribute("src", fileURL);
+//       console.log(file);
+//       localStorage.setItem("urlDrop", fileURL);
+//       localStorage.setItem("image", JSON.stringify(file));
+//     };
+//     let count = file.size / 1048576;
+//     count = count.toFixed(2);
+//     $(".upload-info")
+//       .html(`<img src="image/done.png" alt="done" class="check"><h4 class="img-name">${file.name},</h4> <p class="mb">${count} mb</p>
+//         `);
+//     reader.readAsDataURL(file);
+//   }
+// });
+
+window.addEventListener("load", function () {
+  document.querySelector("#upload").addEventListener("change", function () {
+    const img = document.querySelector(".image");
+
+    img.onload = (e) => {
+      console.log(this.files[0]);
+      uploaded.classList.remove("hidden");
+      uploadAgain.classList.add("flex");
+      uploadAgain.classList.remove("hidden");
+      uploadProblem.classList.add("hidden");
+      URL.revokeObjectURL(img.src);
+      localStorage.setItem("recent", JSON.stringify(img));
+    };
+    let count = this.files[0].size / 1048576;
     count = count.toFixed(2);
     $(
       ".upload-info"
-    ).html(`<img src="image/done.png" alt="done" class="check"><h4 class="img-name">${fileName},</h4> <p class="mb">${count} mb</p>
+    ).html(`<img src="image/done.png" alt="done" class="check"><h4 class="img-name">${this.files[0].name},</h4> <p class="mb">${count} mb</p>
         `);
-  });
 
-// document.addEventListener("DOMContentLoaded", () => {
-//   const recentImageDataUrl = localStorage.getItem("upload");
-//   if (recentImageDataUrl) {
-//     document.querySelector(".image").setAttribute("src", recentImageDataUrl);
+    img.src = URL.createObjectURL(this.files[0]);
+  });
+});
+
+// document.querySelector("#upload").addEventListener("change", function (e) {
+//   const reader = new FileReader();
+//   reader.addEventListener("load", (e) => {
+//     upload.image = reader.result;
 //     uploaded.classList.remove("hidden");
 //     uploadAgain.classList.add("flex");
 //     uploadAgain.classList.remove("hidden");
 //     uploadProblem.classList.add("hidden");
-//     const fileName = localStorage.getItem("fileName");
-//     const size = localStorage.getItem("size");
-//     let count = size / 1048576;
-//     count = count.toFixed(2);
-//     $(".upload-info")
-//       .html(`<img src="image/done.png" alt="done" class="check"><h4 class="img-name">${fileName},</h4> <p class="mb">${count} mb</p>
-//       `);
-//   }
+//     document.querySelector(".image").setAttribute("src", reader.result);
+//     console.log(e.target.files[0]);
+//   });
+
+// let count = this.files[0].size / 1048576;
+// count = count.toFixed(2);
+// $(
+//   ".upload-info"
+// ).html(`<img src="image/done.png" alt="done" class="check"><h4 class="img-name">${this.files[0].name},</h4> <p class="mb">${count} mb</p>
+//     `);
+
+//   reader.readAsDataURL(this.files[0]);
 // });
 
 next.addEventListener("click", function () {
@@ -298,37 +414,51 @@ next.addEventListener("click", function () {
     info.classList.add("hidden");
     laptop.classList.remove("hidden");
     laptop.classList.add("flex");
+    mobile.classList.add("mb:hidden");
+    mobile2.classList.remove("mb:hidden");
+    person.classList.remove("text-gray-400");
+    person.classList.add("text-gray-700");
+    des.classList.remove("text-gray-700");
+    des.classList.add("text-gray-400");
+    line.classList.add("translate-x-[290px]");
+    line.classList.remove("mx-[8px]");
+    line.classList.add("-mr-[12px]");
   }
 });
 
-getData(url_brand, "ლეპტოპის ბრენდი", option_brand);
-getData(url_cpu, "CPU", option_cpu);
+getData(
+  url_brand,
+  "ლეპტოპის ბრენდი",
+  option_brand,
+  "brandArray",
+  brandArray,
+  "name"
+);
+getData(url_cpu, "CPU", option_cpu, "cpuArray", cpuArray, "cpu");
+
+console.log(form.name);
 
 document.addEventListener("DOMContentLoaded", () => {
-  onLoad("first-name", firstName);
-  onLoad("last-name", lastName);
-  onLoad("email", email);
-  onLoad("phone", phone);
-  onLoad("laptop-name", laptopName);
-  onLoad("cores", cores);
-  onLoad("threads", threads);
-  onLoad("ram", ram);
-  onLoad("grid-laptop-date", date);
-  onLoad("price", price);
+  loadContent(form.name, firstName);
+  loadContent(form.surname, lastName);
+  loadContent(form.phone_number, phone);
+  loadContent(form.email, email);
+  loadContent(form.laptop_name, laptopName);
+  loadContent(form.laptop_ram, ram);
+  loadContent(form.laptop_price, price);
+  loadContent(form.laptop_cpu_threads, threads);
+  loadContent(form.laptop_cpu_cores, cores);
+  loadContent(form.date, date);
 
-  function onLoad(key, value) {
-    const Item = localStorage.getItem(`${key}`);
-    if (Item) {
-      value.value = Item;
+  function loadContent(key, value) {
+    if (key) {
+      value.value = key;
     }
   }
+
   const radio1 = localStorage.getItem("memoryStorage");
   const radio2 = localStorage.getItem("stateStorage");
-  const brand = localStorage.getItem("name");
 
-  if (brand === "HP") {
-    document.querySelector("#grid-brand").options[2].selected = true;
-  }
   if (radio1 === "SSD") {
     document.getElementById("memorytype1").checked = true;
   } else if (radio1 === "HDD") {
@@ -340,9 +470,15 @@ document.addEventListener("DOMContentLoaded", () => {
   } else if (radio2 === "used") {
     document.getElementById("stateType2").checked = true;
   }
+  const recent = localStorage.getItem("urlDrop");
+  if (recent) {
+    document.querySelector(".image").setAttribute("src", recent);
+    uploaded.classList.remove("hidden");
+    uploadAgain.classList.add("flex");
+    uploadAgain.classList.remove("hidden");
+    uploadProblem.classList.add("hidden");
+  }
 });
-
-console.log(JSON.parse(localStorage.getItem("name")));
 
 function error(key1, key2, key3) {
   key1.classList.remove("text-gray-500");
@@ -435,9 +571,10 @@ back2.addEventListener("click", function () {
   person.classList.remove("text-gray-700");
   person.classList.add("text-gray-400");
   des.classList.remove("text-gray-400");
-  line.classList.remove("translate-x-[292px]");
+  line.classList.remove("translate-x-[290px]");
   line.classList.add("mx-[8px]");
   laptop.classList.add("hidden");
+  line.classList.remove("-mr-[12px]");
   laptop.classList.remove("flex");
   mobile.classList.remove("mb:hidden");
   mobile2.classList.add("mb:hidden");
@@ -464,10 +601,19 @@ done.addEventListener("click", function () {
   //price validation
   numberValidation(priceError, price, priceName, price.value);
 
-  // donePage.classList.add("hidden");
-  // postman.classList.add("hidden");
-  // popup.classList.add("flex");
-  // popup.classList.remove("hidden");
+  if (
+    $("#laptop-name").hasClass("border-blue-300") &&
+    $("#cores").hasClass("border-blue-300") &&
+    $("#threads").hasClass("border-blue-300") &&
+    $("#grid-cpu").hasClass("border-gray-200") &&
+    $("#grid-brand").hasClass("border-gray-200") &&
+    $("#ram").hasClass("border-blue-300")
+  ) {
+    donePage.classList.add("hidden");
+    postman.classList.add("hidden");
+    popup.classList.add("flex");
+    popup.classList.remove("hidden");
+  }
 });
 
 function laptopNameVal(key1, key2, key3, value) {
@@ -482,6 +628,36 @@ function laptopNameVal(key1, key2, key3, value) {
     correct(key1, key2, key3);
   }
 }
+
+const formData = new FormData();
+let image = localStorage.getItem("image");
+
+console.log(image);
+
+for (const name in form) {
+  formData.append(name, form[name]);
+}
+formData.append("laptop_image", image);
+
+const url = "https://pcfy.redberryinternship.ge/api/laptop/create";
+
+fetch(url, {
+  method: "POST",
+  header: {
+    Accept: "application/json",
+    "Content-Type": "multipart/form-data",
+  },
+  body: formData,
+})
+  .then(function (response) {
+    return response.text();
+  })
+  .then(function (text) {
+    console.log(text);
+  })
+  .catch(function (error) {
+    console.error(error);
+  });
 
 function photoValidation() {
   if (upload.value === "") {
@@ -520,41 +696,5 @@ function radioValidation(key1, key2, name) {
 }
 
 home.addEventListener("click", function () {
-  location.href = "/index.html";
+  location.href = "../index.html";
 });
-
-const token = "698a69cb866e5fe9c1c7005ca98e60f2";
-
-fetch("https://pcfy.redberryinternship.ge/api/laptop/create", {
-  method: "POST",
-  body: JSON.stringify({
-    name: localStorage.getItem("first-name"),
-    surname: localStorage.getItem("last-name"),
-    team_id: localStorage.getItem("grid-state"),
-    position_id: localStorage.getItem("grid-position"),
-    email: localStorage.getItem("email"),
-    phone_number: localStorage.getItem("phone"),
-    token: token,
-    laptop_name: localStorage.getItem("laptop-name"),
-    laptop_image: localStorage.getItem("upload"),
-    laptop_brand_id: localStorage.getItem("grid-brand"),
-    laptop_cpu: localStorage.getItem("cpu"),
-    laptop_cpu_cores: localStorage.getItem("cores"),
-    laptop_cpu_threads: localStorage.getItem("threads"),
-    laptop_ram: localStorage.getItem("ram"),
-    laptop_hard_drive_type: localStorage.getItem("memoryStorage"),
-    laptop_state: localStorage.getItem("stateStorage"),
-    laptop_price: localStorage.getItem("price"),
-  }),
-  headers: {
-    accept: "application/json",
-    "Content-Type": "application/json",
-  },
-})
-  .then(function (response) {
-    return response.text();
-  })
-  .then(function (text) {
-    console.log(text);
-  })
-  .catch(function (error) {});
