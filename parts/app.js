@@ -84,17 +84,67 @@ const popup = document.querySelector(".popup");
 const postman = document.querySelector(".postman");
 const home = document.querySelector(".home");
 const formInfo = document.querySelector("#form-info");
-const token = "926ae575c2fa4a5177bad4ace85ac5fa";
+const token = "a3200dd88c7653b2824d783573fe66b5";
 const table = document.querySelector(".table");
-const formData = new FormData();
 
+const formData = new FormData();
 //go from form page to landing page
 back.addEventListener("click", function () {
   location.href = "../index.html";
 });
 
+//content load
+document.addEventListener("DOMContentLoaded", () => {
+  if (form !== null) {
+    loadContent(form.name, firstName);
+    loadContent(form.surname, lastName);
+    loadContent(form.phone_number, phone);
+    loadContent(form.email, email);
+    loadContent(form.laptop_name, laptopName);
+    loadContent(form.laptop_ram, ram);
+    loadContent(form.laptop_price, price);
+    loadContent(form.laptop_cpu_threads, threads);
+    loadContent(form.laptop_cpu_cores, cores);
+    loadContent(form.date, date);
+  }
+
+  function loadContent(key, value) {
+    if (key) {
+      value.value = key;
+    }
+  }
+
+  const radio1 = localStorage.getItem("memoryStorage");
+  const radio2 = localStorage.getItem("stateStorage");
+
+  if (radio1 === "SSD") {
+    document.getElementById("memorytype1").checked = true;
+  } else if (radio1 === "HDD") {
+    document.getElementById("memorytype2").checked = true;
+  }
+
+  if (radio2 === "new") {
+    document.getElementById("stateType1").checked = true;
+  } else if (radio2 === "used") {
+    document.getElementById("stateType2").checked = true;
+  }
+});
+
 //local storage
 $("form").on("change", function () {
+  //select local storage
+  $("select").each(function () {
+    let id = $(this).attr("name");
+    let value = $(this).val();
+    localStorage.setItem(id, value);
+  });
+  //radio local storage
+  $('input[type="radio"]:checked').each(function () {
+    let name = $(this).attr("name");
+    let value = $(this).val();
+    localStorage.setItem(name, value);
+  });
+
   const myForm = {
     name: firstName.value,
     surname: lastName.value,
@@ -126,23 +176,6 @@ $("form").on("change", function () {
   for (const name in dataSend) {
     formData.append(name, dataSend[name]);
   }
-
-  for (var pair of formData.entries()) {
-    console.log(pair);
-  }
-
-  //select local storage
-  $("select").each(function () {
-    let id = $(this).attr("name");
-    let value = $(this).val();
-    localStorage.setItem(id, value);
-  });
-  //radio local storage
-  $('input[type="radio"]:checked').each(function () {
-    let name = $(this).attr("name");
-    let value = $(this).val();
-    localStorage.setItem(name, value);
-  });
 });
 
 const form = JSON.parse(localStorage.getItem("myForm"));
@@ -409,7 +442,7 @@ next.addEventListener("click", function () {
     person.classList.add("text-gray-700");
     des.classList.remove("text-gray-700");
     des.classList.add("text-gray-400");
-    line.classList.add("translate-x-[290px]");
+    line.classList.add("translate-x-[260px]");
     line.classList.remove("mx-[8px]");
     line.classList.add("-mr-[12px]");
   }
@@ -425,42 +458,6 @@ getData(
 );
 getData(url_cpu, "CPU", option_cpu, "cpuArray", cpuArray, "cpu");
 
-//content load
-document.addEventListener("DOMContentLoaded", () => {
-  if (form !== null) {
-    loadContent(form.name, firstName);
-    loadContent(form.surname, lastName);
-    loadContent(form.phone_number, phone);
-    loadContent(form.email, email);
-    loadContent(form.laptop_name, laptopName);
-    loadContent(form.laptop_ram, ram);
-    loadContent(form.laptop_price, price);
-    loadContent(form.laptop_cpu_threads, threads);
-    loadContent(form.laptop_cpu_cores, cores);
-    loadContent(form.date, date);
-  }
-
-  function loadContent(key, value) {
-    if (key) {
-      value.value = key;
-    }
-  }
-
-  const radio1 = localStorage.getItem("memoryStorage");
-  const radio2 = localStorage.getItem("stateStorage");
-
-  if (radio1 === "SSD") {
-    document.getElementById("memorytype1").checked = true;
-  } else if (radio1 === "HDD") {
-    document.getElementById("memorytype2").checked = true;
-  }
-
-  if (radio2 === "new") {
-    document.getElementById("stateType1").checked = true;
-  } else if (radio2 === "used") {
-    document.getElementById("stateType2").checked = true;
-  }
-});
 //style error
 function error(key1, key2, key3) {
   key1.classList.remove("text-gray-500");
@@ -553,7 +550,7 @@ back2.addEventListener("click", function () {
   person.classList.remove("text-gray-700");
   person.classList.add("text-gray-400");
   des.classList.remove("text-gray-400");
-  line.classList.remove("translate-x-[290px]");
+  line.classList.remove("translate-x-[260px]");
   line.classList.add("mx-[8px]");
   laptop.classList.add("hidden");
   line.classList.remove("-mr-[12px]");
@@ -664,7 +661,7 @@ function numberValidation(key1, key2, key3, value) {
 }
 //radio validaiton
 function radioValidation(key1, key2, name) {
-  if ($(`:input[name=${name}]`).is(":checked") == false && $) {
+  if ($(`:input[name=${name}]`).is(":checked") == false) {
     key1.classList.remove("text-black");
     key1.classList.add("text-red-500");
     key2.classList.remove("hidden");

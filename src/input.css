@@ -61,3 +61,41 @@ input[type="number"] {
     font-size: 1rem;
   }
 }
+
+.info {
+  display: flex;
+  background-color: #eafaff;
+  border-radius: 25px;
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.info-image {
+  display: flex;
+  height: 11rem;
+  width: 50%;
+  border-radius: 25px;
+  object-fit: cover;
+}
+
+.info-div {
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.info-name {
+  margin-bottom: 0.5rem;
+  font-size: 14px;
+  width: 100%;
+}
+
+.info-laptop {
+  font-size: 1rem;
+  margin-bottom: 3rem;
+}
+
+.more {
+  text-decoration: underline;
+  color: aqua;
+  cursor: pointer;
+}
