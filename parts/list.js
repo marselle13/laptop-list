@@ -57,9 +57,18 @@ fetch(laptop)
 
           cardChild.appendChild(card);
 
-          const brands = ["HP", "Dell", "Microsoft", "Apple", "Lenovo", "Acer"];
+          const brands = [
+            "",
+            "HP",
+            "Dell",
+            "Microsoft",
+            "Apple",
+            "Lenovo",
+            "Acer",
+          ];
 
           const teams = [
+            "",
             "დეველოპერი",
             "HR",
             "გაყიდვები",
@@ -68,6 +77,7 @@ fetch(laptop)
           ];
 
           const positions = [
+            "",
             "ინტერნი",
             "ჯუნიორ დეველოპერი",
             "მიდლ დეველოპერი",
@@ -103,20 +113,21 @@ fetch(laptop)
                 let output = "";
                 for (var info in data) {
                   console.log(data[info].user.team_id);
-                  for (let i = 1; i < teams.length; i++) {
+                  for (let i = 0; i < teams.length; i++) {
                     if (data[info].user.team_id == i) {
                       $(".timi").text(teams[i]);
                     }
                   }
+                  console.log(data[info].laptop.purchase_date);
 
-                  for (let i = 1; i < positions.length; i++) {
+                  for (let i = 0; i < positions.length; i++) {
                     if (data[info].user.position_id == i) {
                       $(".pozicia").text(positions[i]);
                     }
                   }
                   console.log();
 
-                  for (let i = 1; i < brands.length; i++) {
+                  for (let i = 0; i < brands.length; i++) {
                     if (data[info].laptop.brand_id == i) {
                       $(".brendi").text(brands[i]);
                     }
